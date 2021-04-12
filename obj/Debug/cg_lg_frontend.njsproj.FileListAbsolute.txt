@@ -1,0 +1,3 @@
+C:\Users\Work\source\repos\cg_lg_frontend\cg_lg_frontend\obj\Debug\cg_lg_frontend.njsprojAssemblyReference.cache
+C:\Users\Work\source\repos\cg_lg_frontend\cg_lg_frontend\obj\Debug\cg_lg_frontend.njsproj.CoreCompileInputs.cache
+C:\Users\Work\source\repos\cg_lg_frontend\cg_lg_frontend\bin\Microsoft.NodejsTools.WebRole.dll

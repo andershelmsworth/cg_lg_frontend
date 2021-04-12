@@ -1,0 +1,9 @@
+{
+  "name": "cg_lg_frontend",
+  "version": "0.0.0",
+  "description": "cg_lg_frontend",
+  "main": "server.js",
+  "author": {
+    "name": ""
+  }
+}

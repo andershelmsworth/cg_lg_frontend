@@ -1,0 +1,38 @@
+<!-- views/pages/index.ejs -->
+<!--  Doctype and head tags -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include ('../partials/head') %>
+</head>
+<body class="container">
+
+<!--  Header stub -->
+<header>
+    <%- include ('../partials/mainHeader') %>
+</header>
+
+<main>
+    <!--  Primary div -->
+    <div class="jumbotron">
+        <h1>Login</h1>
+        <p>
+			<form method="POST" action="/index" id="login">
+				<label for="username">User Name:</label><br>
+				<input type="text" id="username" name="username"><br><br>
+				<label for="password">Password:</label><br>
+				<input type="password" id="password" name="password"><br><br>
+				<input type="submit" value="submit" id="submit"><br>
+			</form>
+
+		</p>
+    </div>
+</main>
+
+<!--  Footer stub -->
+<footer>
+    <%- include ('../partials/footer') %>
+</footer>
+
+</body>
+</html>
