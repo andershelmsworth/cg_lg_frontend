@@ -43,7 +43,7 @@ router.post('/index', function (req, res, next) {
 
     let method = "GET\n";
     let version = "HTTP/1.1";
-    let canonicalURI = "/\n";
+    let canonicalURI = "/default\n\n";
     let action = "Action=\"\"\n";
     let headers = "content-type:application/x-www-form-urlencoded; charset=utf-8\n";
     let host = "host:34z7prad8i.execute-api.us-east-2.amazonaws.com";
@@ -52,16 +52,16 @@ router.post('/index', function (req, res, next) {
     var ISOdate = date.toISOString();
     let amzDate = "x-amz-date:" + ISOdate + "\n";
 
-    let canonicalHeaders = headers + host + amzDate;
-    let signedHeaders = "content-type;charset;host;x-amz-date\n";
-    let message = "Hello, WOrld!";
+    let canonicalHeaders = host + amzDate;
+    let signedHeaders = "content-type;host;x-amz-date\n";
+    let message = "";
 
     var messageB64 = crypto.SHA256(utf8.encode(message));
     var messageB64hex = messageB64.toString(crypto.enc.Hex);
 
     let encrypted = messageB64hex;
     
-    let canonicalRequest = method + version + canonicalURI + action + headers + host + amzDate + "\n" + signedHeaders + encrypted;
+    let canonicalRequest = method + version + canonicalURI + host + amzDate + "\n" + signedHeaders + encrypted;
 
     let encryptedRequest = crypto.SHA256(utf8.encode(canonicalRequest));
     let encryptedRequestHex = encryptedRequest.toString(crypto.enc.Hex);
@@ -69,8 +69,11 @@ router.post('/index', function (req, res, next) {
     let algorithm = "AWS4-HMAC-SHA256\n";
 
     let region = "/us-east-2/";
-    let shortTime = date.getUTCFullYear() + date.getUTCMonth() + date.getUTCDay();
-    let serviceTarget = shortTime + region + "34z7prad8i.execute-api.us-east-2.amazonaws.com/aws4_request";
+    let month = date.getUTCMonth();
+    month = month + 1;
+    let shortTime = date.getUTCFullYear().toString() + "0" + month.toString() + date.getUTCDate().toString();
+    
+    let serviceTarget = shortTime + region + "execute-api/aws4_request";
     let stringToSign = algorithm + amzDate + serviceTarget + encryptedRequestHex;
 
     var kDate = crypto.HmacSHA256.toString(utf8.encode(shortTime), utf8.encode("AWS4" + key));
@@ -91,11 +94,13 @@ router.post('/index', function (req, res, next) {
 
     requestObject.setRequestHeader(utf8.encode('Authorization'), authHeader);
 
+    requestObject.setRequestHeader(utf8.encode('X-Amz-Date'), utf8.encode(ISOdate));
+
     requestObject.onreadystatechange = function () {
         if (requestObject.readyState === 4) {
             console.log(authHeader);
 
-            res.render('pages/auth', { data: "Hello, World" });
+            res.render('pages/auth', { data: requestObject.responseText });
             return;
         }
     }
