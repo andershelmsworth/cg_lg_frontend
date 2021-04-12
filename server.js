@@ -7,7 +7,7 @@ var express = require('express');
 var app = express();
 const session = require('express-session');
 
-var key = require('./key.js');
+//var key = require('./key.js');
 
 //const redis = require('redis');
 //const redisStore = require('connect-redis')(session);
